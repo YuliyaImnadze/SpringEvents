@@ -14,8 +14,13 @@ import java.util.UUID;
 @Component
 public class TicketEventProcessor {
 
+
+    private final TicketEventPublisher publisher;
+
     @Autowired
-    private TicketEventPublisher publisher;
+    public TicketEventProcessor(TicketEventPublisher publisher) {
+        this.publisher = publisher;
+    }
 
     public TicketPayload process() {
         TicketPayload payload = new TicketPayload();

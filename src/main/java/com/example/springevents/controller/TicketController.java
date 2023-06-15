@@ -13,16 +13,18 @@ import java.util.Date;
 @RequestMapping("/api/v1/ticket")
 public class TicketController {
 
+    private final TicketEventProcessor eventProcessor;
+
     @Autowired
-    private TicketEventProcessor eventProcessor;
+    public TicketController(TicketEventProcessor eventProcessor) {
+        this.eventProcessor = eventProcessor;
+    }
 
     @GetMapping("/generate")
     public String generateTicket() {
         System.out.println("Start: " + new Date());
         TicketPayload payload = eventProcessor.process();
         System.out.println("Finish: " + new Date());
-        return String.format("Ticket %s generated with pin %s!", payload.getId(),payload.getPin());
-//        String.format("Ticket %s generated with pin %s at %s", payload.getId(),
-//                payload.getPin(), new Date()));
+        return String.format("Ticket %s generated with pin %s!", payload.getId(), payload.getPin());
     }
 }
